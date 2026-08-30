@@ -1,5 +1,5 @@
 - We want to calculate the Sales using the olist dataset
-- I've imported and cleaned the data using MySQL db
+- I've imported and cleaned the data using MySQL workbench
 - In the products table, we created a staging table for it
 -> called it products_staging
 
@@ -21,3 +21,7 @@ ADD COLUMN product_category_english VARCHAR(100);
 #   ps.product_category_english = ct.product_category_name_english;
 
 - Instead of making use of 5 tables for our sales analysis, its now been reduced to 4
+- There is a bit of an issue, then i counted() the rows in the product_category english (in the products_staging)
+
+- i am seeing 71 rows instead of 74
+- 
