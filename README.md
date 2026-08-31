@@ -1,3 +1,18 @@
+===========================================================================
+- AVG_ORDER_VALUE = $134.63
+- TOTAL_REVENUE = $13,283,024.48
+- TOTAL_ORDERS = 98,666
+- TOTAL_CUSTOMERS = 95,420 
+Orders per Customer	98,666 / 95,420 = 1.034
+What this means: Most customers placed exactly 1 order. Only a very small percentage came back for a second purchase.
+
+
+===========================================================================
+
+
+
+
+
 - We want to calculate the Sales using the olist dataset
 - I've imported and cleaned the data using MySQL workbench
 - In the products table, we created a staging table for it
@@ -93,3 +108,23 @@ Orders per Customer	98,666 / 95,420 = 1.034
 What this means: Most customers placed exactly 1 order. Only a very small percentage came back for a second purchase.
 
 It tells you that the business is great at acquiring new customers, but not great at retaining them. 
+
+- Next, we look at the Yearly, monthly revenue, we also gonna look at seasonality
+
+- seasons like easter, christmas and all that, where there could be sales spikes
+
+- First, i want to start with the yearly revenue, and i am thinking of using 
+- stored procedures
+- stored procedures contain reusable sql scripts and can take in parameters
+- i like to think of them as functions()
+- 
+- i created the stored procedure to calc the yearly revenue
+- all you have to do is slot in the year as parameter
+- CALL get_yearly_revenue(2016); 
+ -- see the analyzing_olist_brazil file --
+
+ - next, i want to find the entire monthly revenue for a particular year
+ - when we say
+ - CALL get_all_monthly_revenue(- would take in year as paremeters)
+ - We get the entire months jan - dec
+ 

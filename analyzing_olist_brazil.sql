@@ -2,15 +2,14 @@
 
 select * from customers_staging;
 select * from products_staging;
-select * from orders_staging
-where order_status = 'cancelled' OR order_status = 'unavailable';
+select * from orders_staging;
 select distinct order_status from orders_staging;
 select * from order_items_staging;
 
 -- I think we'll need to use a view
 CREATE OR REPLACE VIEW sales_summary AS
 SELECT cs.customer_unique_id, cs.customer_state,
-	   os.order_status, os.order_id,
+	   os.order_status, os.order_id, os.order_purchase_timestamp,
        ois.order_item_id , ois.price, ois.freight_value, ps.product_category_english
 FROM customers_staging cs
 JOIN orders_staging os
@@ -47,6 +46,20 @@ SELECT order_count FROM total_orders;
 -- SELECT
 -- 	ROUND((SELECT revenue FROM total_revenue) / (SELECT order_count FROM total_orders), 2) AS avg_order_value;
        
+-- SELECT DISTINCT MONTH(order_purchase_timestamp) AS `MONTH`, 
+-- YEAR(order_purchase_timestamp)  AS `YEAR` FROM sales_summary;
+
+DELIMITER $$
+CREATE PROCEDURE get_yearly_revenue(IN `year` INT)
+BEGIN
+	SELECT ROUND(SUM(price), 2) FROM sales_summary
+    WHERE YEAR(order_purchase_timestamp) = `year`;
+END $$
+DELIMITER ;
+-- FOR YEARLY REVENUE
+CALL get_yearly_revenue(2016);
+
+
 
 
 
