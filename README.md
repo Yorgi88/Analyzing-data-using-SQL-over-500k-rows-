@@ -24,4 +24,72 @@ ADD COLUMN product_category_english VARCHAR(100);
 - There is a bit of an issue, then i counted() the rows in the product_category english (in the products_staging)
 
 - i am seeing 71 rows instead of 74
-- 
+- i am also seeing some blanc and null values in the products_staging table
+- (over 600 of them)
+
+when we ran this script
+
+SELECT ps.product_category, ct.product_category_name_english 
+FROM products_staging ps
+LEFT JOIN category_table
+    ON ps.product_category_name = ct.product_category_name
+WHERE ct.product_category_name_english is null
+GROUP BY ps.product_category_name;
+
+- we found out some cateogory not having a translation and blanks/null vals
+
+- we also ran the script: 
+SELECT * FROM products_staging
+WHERE product_category_name = '' 
+  AND product_category_english IS NULL;
+
+- 610 rows were returned
+
+- so we clean by tagging the product_category_english as 'uncategorized'
+
+- UPDATE products_staging
+-- SET product_category_english = 'Uncategorized'
+-- WHERE product_category_name = '' 
+--   AND product_category_english IS NULL;
+
+- we also clean some category with no tranlsation by giving them one
+
+- ## see analyzing_olist_brazil file for the analysis done
+
+- We gonna start the analysis now
+- We're going to start from the top and work our way down the bottom
+
+- Let's start with these 4
+- TOTAL REVENUE
+- TOTAL ORDERS
+- TOTAL CUSTOMERS
+- AOV [Average Order Value]
+
+- what is revenue ?
+- ##Revenue = The total amount of money a company earns from selling its - - -  products or services.
+
+customers -> orders -> order_items -> products
+- i successfully wrote created a view called sales_summary
+- it comprises of 4 tables that's needed for the analysis
+
+- Now, i ran this: select distinct order_status from orders_staging;
+- and i think we should only focus on 'delivered' and 'invoiced'
+- for the revenue calculation
+
+- Now , we can answer the very top 4 questions
+- also, note for the AVG order value, use this formula
+
+- ## AOV = Total Revenue ÷ Total Orders
+
+- I managed to put these findings into CTEs makes the whole thing clean
+- and readable -- see the analyzing_olist_brazil file
+
+- AVG_ORDER_VALUE = 134.63
+- TOTAL_REVENUE = 13,283,024.48
+- TOTAL_ORDERS = 98,666
+- TOTAL_CUSTOMERS = 95,420 
+
+Orders per Customer	98,666 / 95,420 = 1.034
+What this means: Most customers placed exactly 1 order. Only a very small percentage came back for a second purchase.
+
+It tells you that the business is great at acquiring new customers, but not great at retaining them. 

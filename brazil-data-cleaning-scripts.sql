@@ -169,10 +169,43 @@ JOIN category_translation ct
 	ON ps.product_category_name = ct.product_category_name
 SET ps.product_category_english = ct.product_category_name_english;
 
-select count(distinct product_category_english) from products_staging;
+select count(distinct product_category_name) from products_staging;
+
+select * from products_staging;
+
+select product_category_name ,product_category_name_english from category_translation
+where product_category_name = 'portateis_cozinha_e_preparadores_de_alimentos';
+
+
+SELECT ps.product_category_name, ct.product_category_name_english FROM products_staging ps
+LEFT JOIN category_translation ct
+	ON ps.product_category_name = ct.product_category_name
+WHERE ct.product_category_name_english is null
+GROUP BY ps.product_category_name;
+
+-- 882ae61d3259507f5c3ce5313f433651
+SELECT * FROM products_staging
+WHERE product_category_name = 'portateis_cozinha_e_preparadores_de_alimentos';
 
 select * from products_staging
-where product_category_name and product_category_english = null or '';
+where product_category_name = ''and product_category_english is null;
+
+UPDATE products_staging
+SET
+	product_category_english = 'PC gaming'
+WHERE product_category_name = 'pc_gamer';
+
+
+-- UPDATE products_staging
+-- SET product_category_english = 'Uncategorized'
+-- WHERE product_category_name = '' 
+--   AND product_category_english IS NULL;
+
+
+
+
+
+
 
 
 
