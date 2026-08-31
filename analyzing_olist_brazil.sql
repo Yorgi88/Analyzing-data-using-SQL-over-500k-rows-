@@ -53,15 +53,38 @@ DELIMITER $$
 CREATE PROCEDURE get_yearly_revenue(IN `year` INT)
 BEGIN
 	SELECT ROUND(SUM(price), 2) FROM sales_summary
-    WHERE YEAR(order_purchase_timestamp) = `year`;
+    WHERE YEAR(order_purchase_timestamp) = `year`
+		AND order_status in ('delivered', 'invoiced');
 END $$
 DELIMITER ;
 -- FOR YEARLY REVENUE
-CALL get_yearly_revenue(2016);
+CALL get_yearly_revenue(2018);
 
 
+DELIMITER $$
+CREATE PROCEDURE get_all_monthly_revenue(IN `year` INT)
+BEGIN
+	SELECT MONTH(order_purchase_timestamp) AS `month`, 
+		ROUND(SUM(price), 2) AS revenue FROM sales_summary
+        WHERE YEAR(order_purchase_timestamp) = `year`
+        AND order_status in ('delivered', 'invoiced')
+        GROUP BY MONTH(order_purchase_timestamp)
+        ORDER BY `month` ;
+END $$
+DELIMITER ;
+CALL get_all_monthly_revenue(2018);
 
 
+SELECT MONTH(order_purchase_timestamp) AS `month`, 
+		ROUND(SUM(price), 2) AS revenue ,
+        LAG(ROUND(SUM(price), 2)) OVER(ORDER BY MONTH(order_purchase_timestamp)) AS previous_month_revenue
+        FROM sales_summary
+        WHERE YEAR(order_purchase_timestamp) = 2017
+        GROUP BY MONTH(order_purchase_timestamp)
+        ORDER BY MONTH(order_purchase_timestamp) ;
+
+
+-- next is states and city
 
 
 

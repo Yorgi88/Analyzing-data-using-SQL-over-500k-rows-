@@ -6,6 +6,13 @@
 Orders per Customer	98,666 / 95,420 = 1.034
 What this means: Most customers placed exactly 1 order. Only a very small percentage came back for a second purchase.
 
+- YEARLY REVENUE
+2016 - $49,785.92
+2017 - $6,155,806.98
+2018 - $7,386,050.80
+
+- 
+
 
 ===========================================================================
 
@@ -127,4 +134,3 @@ It tells you that the business is great at acquiring new customers, but not grea
  - when we say
  - CALL get_all_monthly_revenue(- would take in year as paremeters)
  - We get the entire months jan - dec
- 
