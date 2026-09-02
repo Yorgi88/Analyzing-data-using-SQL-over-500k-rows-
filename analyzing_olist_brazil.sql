@@ -8,7 +8,7 @@ select * from order_items_staging;
 
 -- I think we'll need to use a view
 CREATE OR REPLACE VIEW sales_summary AS
-SELECT cs.customer_unique_id, cs.customer_state,
+SELECT cs.customer_unique_id, cs.customer_state, cs.customer_city,
 	   os.order_status, os.order_id, os.order_purchase_timestamp,
        ois.order_item_id , ois.price, ois.freight_value, ps.product_category_english
 FROM customers_staging cs
@@ -117,8 +117,17 @@ DELIMITER ;
 CALL monthly_revenue_compare(2018);
 
 
-
-
+WITH total_rev AS (
+	SELECT ROUND(SUM(price), 2) as revenue FROM sales_summary
+    WHERE order_status IN('delivered', 'invoiced')
+)
+SELECT customer_state,customer_city, ROUND(SUM(price), 2) as revenue, 
+ROUND(SUM(price) / (SELECT revenue FROM total_rev) * 100,2) as percentage FROM sales_summary
+WHERE order_status in ('delivered', 'invoiced')
+GROUP BY customer_state, customer_city
+ORDER BY revenue desc
+LIMIT 10;
+-- top performing cities and states
 
 
 

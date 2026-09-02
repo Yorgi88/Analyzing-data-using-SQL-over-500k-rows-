@@ -1,6 +1,6 @@
 ===========================================================================
 - AVG_ORDER_VALUE = $137.24
-- TOTAL_REVENUE = $13,283,024.48
+- TOTAL_REVENUE = $13,283,024.48 
 - TOTAL_ORDERS = 98,666 / new: 96,790
 - TOTAL_CUSTOMERS = 95,420  / new: 93,654 
 Orders per Customer	96,790 / 93,654  = 1.0334
@@ -164,5 +164,9 @@ It tells you that the business is great at acquiring new customers, but not grea
 - with LAG() we can look at March 2017 earnings and compare it will February 2017, to see how sales did
 - CALL monthly_revenue_compare(2018);  -- see the analyzing_olist_brazil file
 
-- 
+- Next, we now want to look at revenue by city and state
+
+- we've been able to look at the top performing states and cities
+- as well as the percentage they each contribute to the total revenue
+- see the analyzing_olist_brazil file
 
