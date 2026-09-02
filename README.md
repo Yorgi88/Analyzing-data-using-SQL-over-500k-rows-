@@ -1,19 +1,21 @@
 ===========================================================================
-- AVG_ORDER_VALUE = $134.63
+- AVG_ORDER_VALUE = $137.24
 - TOTAL_REVENUE = $13,283,024.48
-- TOTAL_ORDERS = 98,666
-- TOTAL_CUSTOMERS = 95,420 
-Orders per Customer	98,666 / 95,420 = 1.034
+- TOTAL_ORDERS = 98,666 / new: 96,790
+- TOTAL_CUSTOMERS = 95,420  / new: 93,654 
+Orders per Customer	96,790 / 93,654  = 1.0334
 What this means: Most customers placed exactly 1 order. Only a very small percentage came back for a second purchase.
 
 - YEARLY REVENUE
-2016 - $49,785.92
-2017 - $6,155,806.98
-2018 - $7,386,050.80
+2016 - $43,381.61
+2017 - $5,990,719.59
+2018 - $7,248,923.28
+
+- In the year 2016, most sales were made in October - $49,507.66
+- in the year 2017, most sales were made in November - $1,010,271.37
+- in the year 2018, most sales were made in May - $996,517.68
 
 - 
-
-
 ===========================================================================
 
 
@@ -134,3 +136,23 @@ It tells you that the business is great at acquiring new customers, but not grea
  - when we say
  - CALL get_all_monthly_revenue(- would take in year as paremeters)
  - We get the entire months jan - dec
+
+ - tried using the LAG() function to compare previous momths
+ - SELECT MONTH(order_purchase_timestamp) AS `month`, 
+		ROUND(SUM(price), 2) AS revenue ,
+        LAG(ROUND(SUM(price), 2)) OVER(ORDER BY MONTH(order_purchase_timestamp)) AS previous_month_revenue
+        FROM sales_summary
+        WHERE YEAR(order_purchase_timestamp) = 2017
+        GROUP BY MONTH(order_purchase_timestamp)
+        ORDER BY MONTH(order_purchase_timestamp) ;
+
+
+## We made an error so far in the TOTAL_ORDERS, TOTAL_CUSTOMERS, AOV, get_yearly_revenue(), get_monthly()
+
+- i created fresh stored_procedures:  get_yearly_revenue(), get_monthly()
+- dropped the old ones
+
+- i forgot to always include: order_status IN ('delivered', 'invoiced');
+- This is crucial, because without it, sql also includes all order_statuses
+- like 'shipped' , 'approved', etc
+

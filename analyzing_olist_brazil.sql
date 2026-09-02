@@ -35,16 +35,18 @@ WITH total_revenue AS (
 ),
 total_customers AS (
 	SELECT COUNT(DISTINCT customer_unique_id) as customer_count FROM sales_summary
+    WHERE order_status in ('delivered', 'invoiced')
 ),
 
 total_orders AS (
 	SELECT COUNT(DISTINCT order_id) as order_count FROM sales_summary
+    WHERE order_status in ('delivered', 'invoiced')
 )
 -- SELECT revenue FROM total_revenue;
-SELECT order_count FROM total_orders;
+-- SELECT order_count FROM total_orders;
 -- SELECT customer_count FROM total_customers;
--- SELECT
--- 	ROUND((SELECT revenue FROM total_revenue) / (SELECT order_count FROM total_orders), 2) AS avg_order_value;
+SELECT
+	ROUND((SELECT revenue FROM total_revenue) / (SELECT order_count FROM total_orders), 2) AS avg_order_value;
        
 -- SELECT DISTINCT MONTH(order_purchase_timestamp) AS `MONTH`, 
 -- YEAR(order_purchase_timestamp)  AS `YEAR` FROM sales_summary;
@@ -52,27 +54,13 @@ SELECT order_count FROM total_orders;
 DELIMITER $$
 CREATE PROCEDURE get_yearly_revenue(IN `year` INT)
 BEGIN
-	SELECT ROUND(SUM(price), 2) FROM sales_summary
+    SELECT ROUND(SUM(price), 2) AS total_revenue
+    FROM sales_summary
     WHERE YEAR(order_purchase_timestamp) = `year`
-		AND order_status in ('delivered', 'invoiced');
+      AND order_status IN ('delivered', 'invoiced');
 END $$
 DELIMITER ;
--- FOR YEARLY REVENUE
 CALL get_yearly_revenue(2018);
-
-
-DELIMITER $$
-CREATE PROCEDURE get_all_monthly_revenue(IN `year` INT)
-BEGIN
-	SELECT MONTH(order_purchase_timestamp) AS `month`, 
-		ROUND(SUM(price), 2) AS revenue FROM sales_summary
-        WHERE YEAR(order_purchase_timestamp) = `year`
-        AND order_status in ('delivered', 'invoiced')
-        GROUP BY MONTH(order_purchase_timestamp)
-        ORDER BY `month` ;
-END $$
-DELIMITER ;
-CALL get_all_monthly_revenue(2018);
 
 
 SELECT MONTH(order_purchase_timestamp) AS `month`, 
@@ -85,6 +73,32 @@ SELECT MONTH(order_purchase_timestamp) AS `month`,
 
 
 -- next is states and city
+
+-- RECAP
+-- Create a stored procedure that gives you the entire monthly revenue
+-- just by inputting the year
+
+DELIMITER $$
+CREATE PROCEDURE get_monthly(IN `year` INT)
+BEGIN
+	SELECT MONTH(order_purchase_timestamp) AS `month` , ROUND(SUM(price), 2) AS revenue
+    FROM sales_summary
+    WHERE YEAR(order_purchase_timestamp) = `year`
+    AND order_status in ('delivered', 'invoiced')
+    GROUP BY MONTH(order_purchase_timestamp)
+    ORDER BY `month`;
+END $$
+DELIMITER ;
+CALL get_monthly(2016);
+
+
+
+
+
+
+
+
+
 
 
 
