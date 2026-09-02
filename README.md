@@ -17,6 +17,23 @@ What this means: Most customers placed exactly 1 order. Only a very small percen
 
 - After May 2018, there seems to be a decline in sales
 - 2017 seems like their best year so far
+
+- TOP CITY = São Paulo Dominates Everything - by 70%
+- FOLLOWED BY: Rio De Janeiro
+
+    TOP PRODUCT CATEGORIES
+    -------------------------
+- health_beauty
+- bed_bath_table
+- watches_gifts
+- sports_leisure
+- computers_accessories
+- housewares
+- furniture_decor
+- watches_gifts
+- health_beauty
+- bed_bath_table
+- toys
 ===========================================================================
 
 
@@ -169,4 +186,8 @@ It tells you that the business is great at acquiring new customers, but not grea
 - we've been able to look at the top performing states and cities
 - as well as the percentage they each contribute to the total revenue
 - see the analyzing_olist_brazil file
+
+- next, we looked at the top_product_categories
+
+ -- 
 

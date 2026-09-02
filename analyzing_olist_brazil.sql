@@ -131,6 +131,23 @@ LIMIT 10;
 
 
 
+-- top products now
+SELECT product_category_english as top_category, customer_city as top_city,ROUND(SUM(price), 2) as revenue
+FROM sales_summary
+WHERE order_status in ('delivered', 'invoiced')
+GROUP BY top_category, top_city
+ORDER BY revenue desc
+LIMIT 10;
+
+SELECT product_category_english as top_category, customer_state as top_state,ROUND(SUM(price), 2) as revenue
+FROM sales_summary
+WHERE order_status in ('delivered', 'invoiced')
+GROUP BY top_category, top_state
+ORDER BY revenue desc
+LIMIT 10;
+
+
+
 
 
 
