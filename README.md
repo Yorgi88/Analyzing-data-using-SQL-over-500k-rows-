@@ -11,11 +11,12 @@ What this means: Most customers placed exactly 1 order. Only a very small percen
 2017 - $5,990,719.59
 2018 - $7,248,923.28
 
-- In the year 2016, most sales were made in October - $49,507.66
-- in the year 2017, most sales were made in November - $1,010,271.37
-- in the year 2018, most sales were made in May - $996,517.68
+- In the year 2016, most sales were made in October - $43,235.74
+- in the year 2017, most sales were made in November - $992,047.17
+- in the year 2018, most sales were made in May - $984,371.59
 
-- 
+- After May 2018, there seems to be a decline in sales
+- 2017 seems like their best year so far
 ===========================================================================
 
 
@@ -155,4 +156,13 @@ It tells you that the business is great at acquiring new customers, but not grea
 - i forgot to always include: order_status IN ('delivered', 'invoiced');
 - This is crucial, because without it, sql also includes all order_statuses
 - like 'shipped' , 'approved', etc
+
+- next, i created a stored procedure for getting all the month's revenue
+- for each year and compare with previous month
+
+- and i also added a LAG() which is used here to compare the monthly earnings
+- with LAG() we can look at March 2017 earnings and compare it will February 2017, to see how sales did
+- CALL monthly_revenue_compare(2018);  -- see the analyzing_olist_brazil file
+
+- 
 

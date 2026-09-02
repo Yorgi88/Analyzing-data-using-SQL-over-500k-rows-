@@ -93,6 +93,31 @@ CALL get_monthly(2016);
 
 
 
+SELECT MONTH(order_purchase_timestamp) AS `month`, ROUND(SUM(price), 2) AS revenue,
+LAG(ROUND(SUM(price), 2)) OVER(ORDER BY MONTH(order_purchase_timestamp)) AS prev_revenue
+FROM sales_summary
+WHERE order_status IN ('delivered', 'invoiced')
+AND YEAR(order_purchase_timestamp) = 2016
+GROUP BY MONTH(order_purchase_timestamp)
+ORDER BY MONTH(order_purchase_timestamp);
+-- Now, can we turn the script above into a stored_procedure?
+
+DELIMITER $$
+CREATE PROCEDURE monthly_revenue_compare(IN `year` int)
+BEGIN
+	SELECT MONTH(order_purchase_timestamp) AS `month`, ROUND(SUM(price), 2) AS revenue,
+LAG(ROUND(SUM(price), 2)) OVER(ORDER BY MONTH(order_purchase_timestamp)) AS prev_revenue
+FROM sales_summary
+WHERE YEAR(order_purchase_timestamp) = `year`
+AND order_status IN ('delivered', 'invoiced')
+GROUP BY MONTH(order_purchase_timestamp)
+ORDER BY `month`;
+END $$
+DELIMITER ;
+CALL monthly_revenue_compare(2018);
+
+
+
 
 
 
