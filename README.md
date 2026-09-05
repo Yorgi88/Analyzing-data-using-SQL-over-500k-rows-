@@ -34,6 +34,9 @@ What this means: Most customers placed exactly 1 order. Only a very small percen
 - health_beauty
 - bed_bath_table
 - toys
+
+- NET REVENUE = Total Revenue - Total shipping cost
+- $13,283,024.48 - $2,205,738.02  = $11,077,286.46
 ===========================================================================
 
 
@@ -190,4 +193,8 @@ It tells you that the business is great at acquiring new customers, but not grea
 - next, we looked at the top_product_categories
 
  -- 
+
+- Next is net revenue
+- Total Revenue - Total shipping cost
+
 

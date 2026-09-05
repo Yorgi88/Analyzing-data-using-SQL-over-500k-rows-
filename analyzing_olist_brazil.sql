@@ -146,6 +146,16 @@ GROUP BY top_category, top_state
 ORDER BY revenue desc
 LIMIT 10;
 
+-- Net Revenue
+-- Total rev - Total shipping cost, in our case, freight value
+WITH net_revenue AS (
+	SELECT ROUND(SUM(price), 2) - ROUND(SUM(freight_value), 2)
+    FROM sales_summary
+    WHERE order_status in ('delivered', 'invoiced')
+)
+select * from net_revenue as net_revenue;
+
+
 
 
 
